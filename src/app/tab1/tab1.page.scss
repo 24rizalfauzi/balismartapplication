@@ -1,0 +1,21 @@
+ion-content ion-toolbar {
+  --background: translucent;
+}
+
+.welcome-card img {
+  max-height: 35vh;
+  overflow: hidden;
+}
+.page-text-grid {
+	font-size: 12px
+}
+ion-card {
+	margin-top: 5px  !important;
+	margin-bottom: 5px !important;
+	margin-left: 5px !important;
+	margin-right: 5px !important;
+}
+
+ion-icon {
+	font-size: 50px !important;
+}

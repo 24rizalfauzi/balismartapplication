@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-title>History</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<br>
+    <ion-row>
+      <ion-col size="6" align="center" (click)="showIdeas()">
+        <img class="img-responsive" src="assets/images/lightbulb.png" width="25" height="25"> Ide
+      </ion-col>
+      <ion-col size="6" align="center" (click)="showSharings()">
+        <img class="img-responsive" src="assets/images/presentation.png" width="25" height="25"> Sharing
+      </ion-col>
+    </ion-row>
+    <ion-item-divider></ion-item-divider>
+	<ion-item class="welcome-card" *ngFor="let ide of ideas" id="ide">
+	    <img class="img-responsive" src="assets/images/lightbulb.png" width="20" height="20">&nbsp;&nbsp;&nbsp;&nbsp;
+	    <div>
+			<br>
+			<div>Mentor : <a [routerDirection]="'root'" [routerLink]="'/tabs/profile'" [queryParams]="{userId:ide.mentorId}" style="text-decoration: none;">{{ide.mentorName}}</a></div>
+			<div>Pengaju : <a [routerDirection]="'root'" [routerLink]="'/tabs/profile'" [queryParams]="{userId:ide.applicantId}" style="text-decoration: none;">{{ide.applicantName}}</a></div>
+			<div>Judul : <a [routerDirection]="'root'" [routerLink]="'/tabs/forum-ide'" [queryParams]="{ideId:ide.ideId}" style="text-decoration: none;">{{ide.judul}}</a></div>
+			<div>Status : {{ide.status}}</div>
+			<div style="text-align:right">{{ide.createdDate | date:'dd/MM/yyyy HH:mm:ss'}}</div>
+		    <br>
+	    </div>
+  	</ion-item>
+	<ion-item class="welcome-card" *ngFor="let sharing of sharings" id="sharing" style="display:none">
+	    <img class="img-responsive" src="assets/images/presentation.png" width="20" height="20">&nbsp;&nbsp;&nbsp;&nbsp;
+	    <div>
+			<br>
+			<div>Mentor : <a [routerDirection]="'root'" [routerLink]="'/tabs/profile'" [queryParams]="{userId:sharing.mentorId}" style="text-decoration: none;">{{sharing.mentorName}}</a></div>
+			<div>Pengaju : <a [routerDirection]="'root'" [routerLink]="'/tabs/profile'" [queryParams]="{userId:sharing.applicantId}" style="text-decoration: none;">{{sharing.applicantName}}</a></div>
+			<div>Judul : <a [routerDirection]="'root'" [routerLink]="'/tabs/forum-sharing-session'" [queryParams]="{sharingId:sharing.sharingId}" style="text-decoration: none;">{{sharing.judul}}</a></div>
+			<div>Status : {{sharing.status}}</div>
+			<div style="text-align:right">{{sharing.createdDate | date:'dd/MM/yyyy HH:mm:ss'}}</div>
+			<br>
+	    </div>
+  	</ion-item>
+</ion-content>

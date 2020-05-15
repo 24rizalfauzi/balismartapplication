@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1042747389441",
+    "firebase_url": "https://bali-smart-innovation.firebaseio.com",
+    "project_id": "bali-smart-innovation",
+    "storage_bucket": "bali-smart-innovation.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1042747389441:android:9a2cba54d8c7831d587200",
+        "android_client_info": {
+          "package_name": "com.ip.balismartapllication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1042747389441-52fegis8dk6ehbgrgilahnh9rrqrjpjv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKESInJfKbj13JSdt2JQ31OKfdTLt23QY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1042747389441-52fegis8dk6ehbgrgilahnh9rrqrjpjv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "BaliSmartInnovation",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

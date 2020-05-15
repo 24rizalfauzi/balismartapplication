@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Ide
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="1"></ion-col>
+      <ion-col size="10">
+        <form #form="ngForm" (ngSubmit)="submitNewIde(form)" method="post" *ngIf="user.role=='user' || user.role=='mentor'">
+          <ion-item>
+            <ion-label position="floating">Judul</ion-label>
+            <ion-input [(ngModel)]="judul" type="text" name="judul"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Latar Belakang</ion-label>
+            <ion-textarea [(ngModel)]="latarBelakang" type="text" name="latarBelakang"></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Tujuan</ion-label>
+            <ion-textarea [(ngModel)]="tujuan" type="text" name="tujuan"></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Cost Benefit Analysis</ion-label>
+            <ion-textarea [(ngModel)]="costBenefitAnalysis" type="text" name="costBenefitAnalysis"></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <label class="custom-file-upload">
+              <ion-input [(ngModel)]="attachments" type="file" name="attachments" multiple (change)="onChangeAttachments($event)"></ion-input>
+              Lampiran
+            </label>&nbsp;&nbsp;&nbsp;&nbsp;
+            <div [innerHTML]="msgAttachment"></div>
+          </ion-item>   
+          <br>
+          <ion-button type="submit" expand="full" color="primary">Ajukan IDE Baru</ion-button>
+          <div id="msgSubmitNewIde" [innerHTML]="msgSubmitNewIde">{{msgSubmitNewIde}}</div>
+        </form>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+<!-- List Full Lines -->
+<ion-list *ngFor="let aIde of applicantIde" id="applicantIde" queryParamsHandling="preserve" (click)="goToForumIde(aIde.ideId,aIde.status)">
+  <ion-item style.border-left="5px solid {{aIde.border}}">
+    <img class="img-responsive" src="assets/images/lightbulb.png" width="40" height="40">&nbsp;&nbsp;
+    <ion-label>
+      <br>
+      <b style="size: 14px;">{{aIde.judul}}</b>
+      <br>
+      <ion-text style="color:#CACACA"><img *ngIf="aIde.status=='menunggu rso'||aIde.status=='menunggu mentor'" class="img-responsive" src="assets/images/hourglass.png" width="15" height="15">
+        <img *ngIf="aIde.status=='diskusi'" class="img-responsive" src="assets/images/chat.png" width="15" height="15">
+        {{aIde.status}}
+      </ion-text>
+      <br><br>
+    </ion-label>
+    <ion-text style="text-align: right;"><b>{{aIde.progress}}%</b></ion-text>
+    <ion-icon slot="end" name="arrow-forward"></ion-icon>
+  </ion-item>
+</ion-list>
+
+
+  <!-- <div style="color: #667; padding: 12px" *ngFor="let aIde of applicantIde" id="applicantIde">
+    <div><b>Judul</b> : <a [ngStyle]="{'color': (aIde.status=='diskusi') ? '#3880ff' : '#667'}" queryParamsHandling="preserve" (click)="goToForumIde(aIde.ideId,aIde.status)">{{aIde.judul}}</a></div>
+    <div><b>Mentor</b> : <a [routerDirection]="'root'" [routerLink]="'/tabs/profile'" [queryParams]="{userId:aIde.mentorId}" style="text-decoration: none;">{{aIde.mentorName}}</a></div>
+    <div><b>Pengaju</b> : <a [routerDirection]="'root'" [routerLink]="'/tabs/profile'" [queryParams]="{userId:aIde.applicantId}" style="text-decoration: none;">{{aIde.applicantName}}</a></div>
+    <div><b>Maksud</b> :{{aIde.maksud}}</div>
+    <div><b>Tujuan</b> :{{aIde.tujuan}}</div>
+    <small *ngFor="let attachment of aIde.attachments" (click)="downloadAttachment(attachment)">
+      <img class="img-responsive" src="assets/images/file.png" width="15" height="15">{{attachment}}<br>
+    </small>
+    <div><b>Status</b> : 
+      <img *ngIf="aIde.status=='menunggu rso'||aIde.status=='menunggu mentor'" class="img-responsive" src="assets/images/hourglass.png" width="15" height="15">
+      <img *ngIf="aIde.status=='diskusi'" class="img-responsive" src="assets/images/chat.png" width="15" height="15">
+      {{aIde.status}}
+    </div>
+    <div *ngIf="user.role=='mentor'">
+      <ion-button size="small" type="submit" color="danger" (click)="rsoOrForumIde(aIde.ideId,'menunggu rso',null)">Ke RSO</ion-button>
+      <ion-button size="small" type="submit" color="success" (click)="rsoOrForumIde(aIde.ideId,'diskusi',aIde.mentorId)">Diskusi</ion-button>
+    </div>
+    <div style="text-align:right">{{aIde.createdDate | date:'dd/MM/yyyy HH:mm:ss'}}</div>
+    <form #form="ngForm" (ngSubmit)="selectMentorByRso(form)" method="post" *ngIf="user.role=='rso'">
+      <ion-list>
+        <ion-item>
+          <ion-label>Pilih Mentor</ion-label>
+          <ion-select placeholder="Pilih Mentor" name="mentorId" #C (ionChange)="onChangeMentorId(C.value,aIde.ideId)">
+            <ion-select-option *ngFor="let mentor of mentors" value="{{mentor.id}}">{{mentor.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+      <ion-button type="submit" expand="full" color="primary">Submit</ion-button>
+    </form>
+    <ion-item-divider></ion-item-divider>
+  </div> -->
+</ion-content>

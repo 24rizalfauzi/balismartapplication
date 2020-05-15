@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      About
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" align="right">
+        <img class="img-responsive logo-pln-ip" src="assets/images/logo-pln-ip.png">
+      </ion-col>
+      <ion-col size="6">
+        <img class="img-responsive logo-bali-smart-innovation" src="assets/images/logo-bali-smart-innovation.png">
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div class="ion-text-uppercase">
+    <img class="img-responsive hide-in-browser" src="assets/images/background-slanted.jpeg">
+  </div>
+  <div class="status">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="1"></ion-col>
+        <ion-col size="10" align="center">
+          <div>
+            <i>{{settings.about}}</i>
+            <br><br>
+          </div>
+        </ion-col>
+        <ion-col size="1"></ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

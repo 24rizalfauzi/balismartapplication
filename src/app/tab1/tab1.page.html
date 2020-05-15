@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Beranda
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<img class="img-responsive slant-bottom hide-in-browser" src="assets/images/background-home.jpeg" width="100%">
+  <ion-grid>
+    <ion-row>
+      <ion-col no-padding size="4" [routerDirection]="'root'" [routerLink]="'/tabs/profile'" [queryParams]="{userId:user.id}">
+        <ion-card>
+          <ion-card-content align="center">
+            <img class="img-responsive" src="assets/images/account.png" width="40" height="40">
+            <p class="page-text-grid">Profile</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col no-padding size="4" [routerDirection]="'root'" [routerLink]="'/tabs/ide'">
+        <ion-card>
+          <ion-card-content align="center">
+            <img class="img-responsive" src="assets/images/lightbulb.png" width="40" height="40">
+            <p class="page-text-grid">Ide</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col no-padding size="4" [routerDirection]="'root'" [routerLink]="'/tabs/sharing-session'">
+        <ion-card>
+          <ion-card-content align="center">
+            <img class="img-responsive" src="assets/images/presentation.png" width="40" height="40">
+            <p class="page-text-grid">Sharing</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col no-padding size="4" [routerDirection]="'root'" [routerLink]="'/tabs/ebook'">
+        <ion-card>
+          <ion-card-content align="center">
+            <img class="img-responsive" src="assets/images/book.png" width="40" height="40">
+            <p class="page-text-grid">Ebook</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col no-padding size="4" [routerDirection]="'root'" [routerLink]="'/tabs/history'">
+        <ion-card>
+          <ion-card-content align="center">
+            <img class="img-responsive" src="assets/images/clipboard.png" width="40" height="40">
+            <p class="page-text-grid">History</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col *ngIf="user.role=='admin'" no-padding size="4" [routerDirection]="'root'" [routerLink]="'/tabs/settings'">
+        <ion-card>
+          <ion-card-content align="center">
+            <img class="img-responsive" src="assets/images/settings.png" width="40" height="40">
+            <p class="page-text-grid">Settings</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col no-padding size="4" [routerDirection]="'root'" [routerLink]="'/tabs/pegawai'">
+        <ion-card>
+          <ion-card-content align="center">
+            <img class="img-responsive" src="assets/images/group.png" width="40" height="40">
+            <p class="page-text-grid">Pegawai</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

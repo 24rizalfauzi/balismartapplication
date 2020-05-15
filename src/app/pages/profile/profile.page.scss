@@ -1,0 +1,23 @@
+@media screen and (max-width:629px) {
+  	ion-content {
+    	--background: url('/assets/images/background-slanted.jpeg') 0 0/100% auto no-repeat;
+	}
+	#userNip{
+		color: white; font-size:12px
+	}
+	#userName{
+		color: white; font-size:14px
+	}
+	#userEmail{
+		color: white; font-size:10px
+	}
+	#roleName{
+		color: white; font-size:10px
+	}
+}
+
+ion-avatar  {
+    position: absolute;
+    width: 90px !important;  
+    height : 90px !important;  
+}

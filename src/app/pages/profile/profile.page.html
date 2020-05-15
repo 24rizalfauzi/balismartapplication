@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Profile
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding class="background">
+  <div class="profile" class="ion-text-uppercase">
+    <br><br><br>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="1"></ion-col>
+        <ion-col size="2" align="center">
+          <ion-avatar style="border-color: white">
+            <img src="{{userPhoto}}">
+          </ion-avatar>
+        </ion-col>
+        <ion-col size="2"></ion-col>
+        <ion-col size="6">
+          <div id="userNip">{{userNip}}</div>
+          <div id="userName">{{userName}}</div>
+          <div id="userEmail">{{userEmail}}</div>
+          <div id="roleName">{{roleName}}</div>
+        </ion-col>
+        <ion-col size="1"></ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div class="status">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="1"></ion-col>
+        <ion-col size="10" align="center">
+          <br><br><br><br><br><br><br>
+          <div>
+            <i style="font-size:20px">"{{userStatus}}"</i>
+            <br><br>
+            <img *ngIf="user.role=='admin' || user.id==userId" src="assets/images/pencil.png" width="30px" [routerDirection]="'root'" [routerLink]="'/tabs/modal'" [queryParams]="{modalName:'Update User', userId:userId}">
+          </div>
+        </ion-col>
+        <ion-col size="1"></ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

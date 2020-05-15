@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Notifications
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid *ngIf="user.role=='admin'">
+    <ion-row>
+      <ion-col size="1"></ion-col>
+      <ion-col size="10">
+        <form (ngSubmit)="insertNotif()" method="post">
+          <ion-item>
+            <ion-label position="floating">Tulis Pesan</ion-label>
+            <ion-textarea [(ngModel)]="message" name="message"></ion-textarea>
+          </ion-item>  
+          <ion-item>
+            <label class="custom-file-upload">
+              <ion-input [(ngModel)]="attachments" type="file" name="attachments" multiple (change)="onChangeAttachments($event)"></ion-input>
+              Lampiran
+            </label>&nbsp;&nbsp;&nbsp;&nbsp;
+            <div [innerHTML]="msgAttachment"></div>
+          </ion-item>
+          <!-- <div *ngFor="let attachmentU of attachmentsUpdate">
+            <div *ngIf="attachmentU.split('.').pop()=='jpeg'">
+              <img class="img-responsive" src="{{attachmentUrl}}/{{attachmentU}}" width="100%">
+            </div>
+            <div *ngIf="attachmentU.split('.').pop()!='jpeg'">
+              <img class="img-responsive" src="assets/images/file.png" width="15" height="15">{{attachmentU|slice:31}}
+            </div>
+            <br>
+          </div> -->
+          <br> 
+          <!-- <ion-item>
+            <label class="custom-file-upload">
+              <ion-input [(ngModel)]="attachments" type="file" name="attachments" multiple (change)="onChangeAttachments($event)"></ion-input>
+              Lampiran
+            </label>&nbsp;&nbsp;&nbsp;&nbsp;
+            <div [innerHTML]="msgAttachment"></div>
+          </ion-item>  -->
+          <ion-button type="submit" expand="full" color="primary">{{mode}}</ion-button>
+          <ion-button expand="full" color="danger" (click)="modeCreate()" id="cancel" *ngIf="mode=='UPDATE'">CANCEL</ion-button>
+          <br>
+          <p id="stlMsgInsertNotif">{{msgInsertNotif}}</p>
+        </form>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row> 
+  </ion-grid>
+  <ion-item class="welcome-card" *ngFor="let notif of notifications">
+    <ion-text>
+      <br>
+      <ion-icon name="notifications" style="color: #3880FF;"></ion-icon>
+      &nbsp;&nbsp;&nbsp;
+      <img *ngIf="user.role=='admin'" src="assets/images/pencil.png" width="15" (click)="modeUpdate(notif.id)">
+      &nbsp;&nbsp;&nbsp;
+      {{notif.message}}<br><br>
+      <div *ngFor="let attachment of notif.attachments" (click)="downloadAttachmentNotif(attachment)">
+        <div *ngIf="attachment.split('.').pop()=='jpeg'">
+          <img class="img-responsive" src="{{attachmentUrl}}/{{attachment}}" width="100%">
+        </div>
+        <div *ngIf="attachment.split('.').pop()!='jpeg'">
+          <img class="img-responsive" src="assets/images/file.png" width="15" height="15">{{attachment|slice:31}}
+        </div>
+        <br>
+      </div>
+    </ion-text>
+  </ion-item>
+</ion-content>

@@ -1,0 +1,51 @@
+<ion-content id="content">
+  <ion-grid style="background-color: #f2f2f2; -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 80%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 80%);">
+    <br>
+    <ion-row>
+      <ion-col size="6" align="right">
+        <img class="img-responsive logo-pln-ip" src="assets/images/logo-pln-ip.png">
+      </ion-col>
+      <ion-col size="6">
+        <img class="img-responsive logo-bali-smart-innovation" src="assets/images/logo-bali-smart-innovation.png"><br><br><br>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="1"></ion-col>
+      <ion-col size="10">
+        <!-- <form #serverForm="ngForm" (ngSubmit)="setServerUrl(serverForm)" method="post">
+          <br><br><br>
+          <ion-item>
+            <ion-label position="floating">SERVER URL</ion-label>
+            <ion-input [(ngModel)]="serverUrl" type="text" name="serverUrl" required></ion-input>
+          </ion-item>
+          <br><br>
+          <ion-button size="large" type="submit" expand="full" color="primary">SET SERVER</ion-button>
+        </form>-->
+        <form #form="ngForm" (ngSubmit)="login(form)" method="post">
+          <br><br><br>
+          <ion-item>
+            <ion-label position="floating">NIP / Email</ion-label>
+            <ion-input ngModel type="text" name="nip" required></ion-input>
+          </ion-item>
+          <br><br>
+          <ion-item>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input ngModel type="password" name="password" required></ion-input>
+          </ion-item>
+          <br>
+          <div id="errorMessage" [innerHTML]="errorMessage"><br>{{errorMessage}}</div>
+          <br>
+          <ion-button size="large" type="submit" expand="full" color="primary">Masuk</ion-button><br>
+          <div id="spinnerDownloadLink" style="color: #665; background-color: white; padding: 5px" align="center"><br>Generate download link for android and windows <ion-spinner name="lines"></ion-spinner></div>
+          <ion-button size="large" id="downloadPwa" expand="full" color="primary">Download APP</ion-button>
+          <div id="appInstalled" style="color: #665; background-color: white; padding: 5px" align="center"></div>
+          <div id="iphoneMessage" style="color: #665; background-color: white; padding: 5px">Install this webapp to your iPhone: tap <ion-icon name="share"></ion-icon> and then Add to home screen</div>
+        </form>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="1"></ion-col>
+      <ion-col size="10">
+        <form #form="ngForm" (ngSubmit)="submitUpdateSettings()" method="post">
+          <ion-item>
+            <ion-text position="floating">Background login</ion-text>
+          </ion-item>
+          <ion-item>
+            <ion-text>
+              <img src="{{backgroundLoginSrc}}"><br>
+              <label class="custom-file-upload">
+                <ion-input [(ngModel)]="backgroundLoginImg" type="file" name="backgroundLoginImg" (change)="onChangeBackgroundLoginImg($event)"></ion-input>
+                Ganti
+              </label>&nbsp;&nbsp;&nbsp;&nbsp;
+              <div [innerHTML]="msgBackgroundLoginImg"></div>
+              <br>
+            </ion-text>
+          </ion-item>   
+          <ion-item>
+            <ion-label position="floating">About</ion-label>
+            <ion-textarea rows="12" [(ngModel)]="about" type="text" name="about"></ion-textarea>
+          </ion-item>
+          <br>
+          <ion-button type="submit" expand="full" color="primary">Update</ion-button>
+          <br>
+        </form>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

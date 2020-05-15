@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-title>pegawai</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid *ngIf="user.role=='admin'">
+    <ion-row>
+      <ion-col size="1"></ion-col>
+      <ion-col size="10">
+        <form #form="ngForm" (ngSubmit)="submitCreateUser(form)" method="post">
+        <ion-item>
+          <ion-label position="floating">NIP</ion-label>
+          <ion-input [(ngModel)]="userNip" type="text" name="userNip"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input [(ngModel)]="userPassword" type="text" name="userPassword"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Nama</ion-label>
+          <ion-input [(ngModel)]="userName" type="text" name="userName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input [(ngModel)]="userEmail" type="text" name="userEmail"></ion-input>
+        </ion-item>
+        <ion-list>
+          <ion-item>
+            <ion-label>Role</ion-label>
+            <ion-select placeholder="Select One" name="userRole" [(ngModel)]="userRole">
+              <ion-select-option value="admin">Admin</ion-select-option>
+              <ion-select-option value="user">User</ion-select-option>
+              <ion-select-option value="rso">RSO</ion-select-option>
+              <ion-select-option value="mentor">Mentor</ion-select-option>
+              <ion-select-option value="manager">Manager</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+        <!-- <ion-item>
+          <ion-label position="floating">Status</ion-label>
+          <ion-textarea [(ngModel)]="userStatus" name="userStatus" rows="5"></ion-textarea>
+        </ion-item> -->
+        <br>
+        <ion-button type="submit" expand="full" color="primary">Tambah Pegawai</ion-button>
+        <div id="msgSubmitCreateUser" [innerHTML]="msgSubmitCreateUser">{{msgSubmitCreateUser}}</div>
+        <br>
+        </form>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-item *ngFor="let peg of pegawai">
+    <ion-avatar style="border-color: white">
+      <img class="img-responsive" src="{{photoUrl}}/{{peg.photo}}" width="15" height="15">
+    </ion-avatar>&nbsp;&nbsp;&nbsp;
+    <ion-label>
+      <p><a [routerDirection]="'root'" [routerLink]="'/tabs/profile'" [queryParams]="{userId:peg.id}" style="text-decoration: none;">{{peg.name}}</a></p>
+    </ion-label>
+  </ion-item>
+</ion-content>

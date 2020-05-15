@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Sharing Session
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="1"></ion-col>
+      <ion-col size="10">
+        <form #form="ngForm" (ngSubmit)="submitNewSharingSession(form)" method="post" *ngIf="user.role=='user' || user.role=='mentor'">
+          <ion-item>
+            <ion-label position="floating">Judul</ion-label>
+            <ion-input [(ngModel)]="judul" type="text" name="judul"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Latar Belakang</ion-label>
+            <ion-textarea [(ngModel)]="latarBelakang" type="text" name="latarBelakang"></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Tujuan</ion-label>
+            <ion-textarea [(ngModel)]="tujuan" type="text" name="tujuan"></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Cost Benefit Analysis</ion-label>
+            <ion-textarea [(ngModel)]="costBenefitAnalysis" type="text" name="costBenefitAnalysis"></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <label class="custom-file-upload">
+              <ion-input type="file" name="attachments" multiple (change)="onChangeAttachments($event)"></ion-input>
+              Lampiran
+            </label>&nbsp;&nbsp;&nbsp;&nbsp;
+            <div [innerHTML]="msgAttachment"></div>
+          </ion-item> 
+          <ion-item>
+            <ion-label>Mentor</ion-label>
+            <ion-select placeholder="Pilih Mentor" name="mentorId" [(ngModel)]="mentorId">
+              <ion-select-option *ngFor="let mentor of mentors" value="{{mentor.id}}">{{mentor.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <br>
+          <ion-button type="submit" expand="full" color="primary">Ajukan Sharing Session Baru</ion-button>
+          <div id="msgSubmitNewSharingSession" [innerHTML]="msgSubmitNewSharingSession">{{msgSubmitNewSharingSession}}</div>
+        </form>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- List Full Lines -->
+  <ion-list *ngFor="let aSharing of applicantSharing" id="applicantIde" queryParamsHandling="preserve" (click)="goToForumSharingSession(aSharing.sharingId)">
+    <ion-item style.border-left="5px solid {{aSharing.border}}">
+      <img class="img-responsive" src="assets/images/presentation.png" width="40" height="40">&nbsp;&nbsp;
+      <ion-label>
+        <br>
+        <b style="size: 14px;">{{aSharing.judul}}</b>
+        <br>
+        <ion-text style="color:#CACACA"><img *ngIf="aSharing.status=='menunggu jadwal'||aSharing.status=='menunggu mentor'" class="img-responsive" src="assets/images/hourglass.png" width="15" height="15">
+          <img *ngIf="aSharing.status=='diskusi'" class="img-responsive" src="assets/images/chat.png" width="15" height="15">
+          {{aSharing.status}}
+        </ion-text>
+        <br><br>
+      </ion-label>
+      <!-- <ion-text style="text-align: right;"><b>{{aSharing.progress}}%</b></ion-text> -->
+      <ion-icon slot="end" name="arrow-forward"></ion-icon>
+    </ion-item>
+  </ion-list>
+
+
+  <!-- <div *ngFor="let ss of applicantSharing" id="applicantSharing" style="color: #667; padding: 12px">
+    <div>Judul : <a [ngStyle]="{'color': (ss.status=='diskusi') ? '#3880ff!important' : '#667!important'}" queryParamsHandling="preserve" (click)="goToForumSharingSession(ss.sharingId,ss.status,ss.jadwal)">{{ss.judul}}</a></div>
+    <div>Mentor : <a [routerDirection]="'root'" [routerLink]="'/tabs/profile'" [queryParams]="{userId:ss.mentorId}" style="text-decoration: none;">{{ss.mentorName}}</a></div>
+    <small *ngFor="let attachment of ss.attachments" (click)="downloadAttachment(attachment)">
+      <img class="img-responsive" src="assets/images/file.png" width="15" height="15">{{attachment}}<br>
+    </small>
+    <div>Pengaju : <a [routerDirection]="'root'" [routerLink]="'/tabs/profile'" [queryParams]="{userId:ss.applicantId}" style="text-decoration: none;">{{ss.applicantName}}</a></div>
+    <div>Jadwal : {{ss.jadwal | date:'dd/MM/yyyy HH:mm:ss'}}</div>
+    <div>Status : 
+      <img *ngIf="ss.status=='menunggu jadwal'" class="img-responsive" src="assets/images/hourglass.png" width="15" height="15">
+      <img *ngIf="ss.status=='diskusi'" class="img-responsive" src="assets/images/chat.png" width="15" height="15">
+      {{ss.status}}
+    </div>
+    <div style="text-align:right">{{ss.createdDate | date:'dd/MM/yyyy HH:mm:ss'}}</div>
+    <form #form="ngForm" (ngSubmit)="selectJadwalByAdmin(form)" method="post" *ngIf="user.role=='admin'">
+      <ion-list>
+        <ion-item>
+          <ion-label>Pilih Tanggal (WITA)</ion-label>
+          <ion-datetime #C (ionChange)="onChangeJadwal(ss.sharingId,C.value)" displayFormat="DD MMM YYYY HH mm" placeholder="Select Date" max="2100-08-23"></ion-datetime>
+        </ion-item>
+      </ion-list>
+      <ion-button type="submit" expand="full" color="primary">Submit</ion-button>
+    </form>
+    <ion-item-divider></ion-item-divider>
+  </div> -->
+</ion-content>

@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      E-Book
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-card class="welcome-card">
+	    <ion-card-content>
+			<form #form="ngForm" (ngSubmit)="uploadEbook(form)" method="post">
+				<ion-item>
+					<ion-label>Folder</ion-label>
+					<ion-select placeholder="Pilih Folder" name="folder" [(ngModel)]="folder">
+						<ion-select-option *ngFor="let fld of folderEbook" value="{{fld}}">{{fld}}</ion-select-option>
+					</ion-select>
+				</ion-item>
+			    <ion-item lines="none">
+					<label class="custom-file-upload">
+						<ion-input [(ngModel)]="attachments" type="file" name="attachments" multiple (change)="onChangeAttachments($event)"></ion-input>
+						Pilih E-book
+					</label>&nbsp;&nbsp;&nbsp;&nbsp;
+					<div [innerHTML]="msgAttachment"></div>
+				</ion-item>
+				<p id="stlMsgUploadEbook" [innerHTML]="msgUploadEbook"></p><br>
+				<ion-button type="submit" expand="full" color="primary">Upload E-Book</ion-button>
+			</form>
+	    </ion-card-content>
+	</ion-card>
+	<ion-item>
+		<ion-label>List Ebook : </ion-label>
+	</ion-item>
+	<ion-item>
+		<ion-label>Pilih Folder</ion-label>
+		<ion-select #C (ionChange)="onChangeFolderList(C.value)">
+			<ion-select-option *ngFor="let fld of folderEbook" value="{{fld}}">{{fld}}</ion-select-option>
+		</ion-select>
+	</ion-item>
+	<ion-item *ngFor="let ebook of showEbooks">
+	    <ion-avatar style="border-color: white">
+	      <img class="img-responsive" src="assets/images/book.png" width="15" height="15">
+	    </ion-avatar>&nbsp;&nbsp;&nbsp;
+	    <ion-label>
+	      <p><a [routerDirection]="'root'" [routerLink]="'/tabs/profile'" [queryParams]="{userId:ebook.uploaderId}" style="text-decoration: none;">{{ebook.uploaderName}}</a></p>
+	      <!-- <h2 (click)="downloadEbook(ebook.ebookName)">{{ebook.ebookName}}</h2> -->
+	      <h2 *ngFor="let attachment of ebook.attachments" (click)="downloadAttachment(attachment)">{{attachment|slice:31}}<br>
+	      </h2>
+	      <p style="text-align:right">{{ebook.createdDate | date:'dd/MM/yyyy HH:mm:ss'}}</p>
+	    </ion-label>
+	  </ion-item>
+</ion-content>

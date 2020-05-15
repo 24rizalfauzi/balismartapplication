@@ -1,0 +1,181 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Forum Sharing</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid style="background-color: #eee; -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 95%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 95%); padding-bottom: 50px;">
+    <ion-row>
+      <ion-col size="1"></ion-col>
+      <ion-col size="5" align="right">
+        <img class="img-responsive logo-pln-ip" src="assets/images/logo-pln-ip.png">
+      </ion-col>
+      <ion-col size="5">
+        <img class="img-responsive logo-bali-smart-innovation" src="assets/images/logo-bali-smart-innovation.png">
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row> 
+    <ion-row>
+      <ion-col size="12"><br></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">Judul</ion-col>
+      <ion-col size="8">: {{judul}}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">Latar Belakang</ion-col>
+      <ion-col size="8">: {{latarBelakang}}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">Tujuan</ion-col>
+      <ion-col size="8">: {{tujuan}}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">Cost Benefit Analysis</ion-col>
+      <ion-col size="8">: {{costBenefitAnalysis}}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">Mentor</ion-col>
+      <ion-col size="8">: <a [routerDirection]="'root'" [routerLink]="'/tabs/profile'" [queryParams]="{userId:mentorId}" style="text-decoration: none;">{{mentorName}}</a></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">Pengaju</ion-col>
+      <ion-col size="8">: <a [routerDirection]="'root'" [routerLink]="'/tabs/profile'" [queryParams]="{userId:applicantId}" style="text-decoration: none;">{{applicantName}}</a></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">User lain</ion-col>
+      <ion-col size="8">: <img class="img-responsive" src="assets/images/pencil.png" height="15px" width="15px" (click)="showUsersBiasa()">&nbsp;&nbsp;&nbsp;
+        <a *ngFor="let member of members" [routerDirection]="'root'" [routerLink]="'/tabs/profile'" [queryParams]="{userId:member.memberId}" style="text-decoration: none;">
+          {{member.memberName}} ,
+        </a>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">Attachments</ion-col>
+      <ion-col size="8">
+        <div *ngFor="let attachment of attachmentsSharing" (click)="downloadAttachmentSharing(attachment)">
+          <img class="img-responsive" src="assets/images/file.png" width="15" height="15">{{attachment|slice:33}}<br>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">Status</ion-col>
+      <ion-col size="8">: <img *ngIf="status=='menunggu jadwal'||status=='menunggu mentor'" class="img-responsive" src="assets/images/hourglass.png" width="15" height="15">
+          <img *ngIf="status=='diskusi'" class="img-responsive" src="assets/images/chat.png" width="15" height="15">
+          {{status}}
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="4">Jadwal</ion-col>
+      <ion-col size="8" *ngIf="jadwal==null">: Belum ditentukan oleh admin</ion-col>
+      <ion-col size="8" *ngIf="jadwal!=null">: {{jadwal | date:'dd/MM/yyyy HH:mm:ss'}}</ion-col>
+    </ion-row>
+    <!-- <ion-row>
+      <ion-col size="12">
+        <ion-range *ngIf="status=='diskusi'" min="0" max="100" step="10" snaps="true" color="secondary" [(ngModel)]="progress" (click)="onChangeProgress($event)">
+          <ion-label slot="start">0%</ion-label>
+          <ion-label slot="end">100%</ion-label>
+        </ion-range>
+      </ion-col>
+    </ion-row> -->
+    <ion-row>
+      <ion-col size="12">
+        <div style="float:right" *ngIf="user.role=='mentor' && status=='diskusi'">
+          <ion-button size="small" color="danger" (click)="updateStatusSharing('ditutup', mentorId)">Tutup</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <div style="float:right" *ngIf="user.role=='mentor' && status=='menunggu mentor'">
+          <ion-button size="small" type="submit" color="danger" (click)="updateStatusSharing('ditolak', null)">Tolak</ion-button>
+          <ion-button size="small" type="submit" color="success" (click)="updateStatusSharing('menunggu jadwal', mentorId)">Setujui</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <div *ngIf="user.role=='admin' && status=='menunggu jadwal'">
+          <form #form="ngForm" (ngSubmit)="selectJadwalByAdmin(form)" method="post" *ngIf="user.role=='admin'">
+            <ion-list>
+              <ion-item>
+                <ion-label>Pilih Tanggal (WITA)</ion-label>
+                <ion-datetime #C (ionChange)="onChangeJadwal(sharingId,C.value)" displayFormat="DD MMM YYYY HH mm" placeholder="Select Date" max="2100-08-23"></ion-datetime>
+              </ion-item>
+            </ion-list>
+            <ion-button type="submit" expand="full" color="primary">Submit</ion-button>
+          </form>
+        </div>
+      </ion-col>
+    </ion-row>
+    <!-- <ion-row>
+      <ion-col size="1"></ion-col>
+      <ion-col>
+        <div>Judul : {{judul}}</div>
+        <div>Mentor : <a [routerDirection]="'root'" [routerLink]="'/tabs/profile'" [queryParams]="{userId:mentorId}" style="text-decoration: none;">{{mentorName}}</a></div>
+        <div>Pengaju : <a [routerDirection]="'root'" [routerLink]="'/tabs/profile'" [queryParams]="{userId:applicantId}" style="text-decoration: none;">{{applicantName}}</a></div>
+        <div>
+          User lain : 
+          <img class="img-responsive" src="assets/images/pencil.png" height="15px" width="15px" (click)="updateMembers()">&nbsp;&nbsp;&nbsp;
+          <a *ngFor="let member of members" [routerDirection]="'root'" [routerLink]="'/tabs/profile'" [queryParams]="{userId:member.memberId}" style="text-decoration: none;">
+            {{member.memberName}} ,
+          </a>
+        </div>
+        <div>Status : 
+          <img *ngIf="status=='menunggu rso'||status=='menunggu mentor'" class="img-responsive" src="assets/images/hourglass.png" width="15" height="15">
+          <img *ngIf="status=='diskusi'" class="img-responsive" src="assets/images/chat.png" width="15" height="15">
+          {{status}}
+        </div>
+        <div align="right" *ngIf="user.role=='mentor' && status=='diskusi'">
+          <ion-button size="small" color="success" (click)="updateStatusSharing('ditutup')">Tutup</ion-button>
+        </div>
+        <br><br><br>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row> -->
+  </ion-grid>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="1"></ion-col>
+      <ion-col size="10">
+        <form #form="ngForm" (ngSubmit)="submitKomenSharing()" method="post">
+          <ion-item>
+            <ion-label position="floating">Tulis Komentar</ion-label>
+            <ion-textarea [(ngModel)]="komen" name="komen"></ion-textarea>
+          </ion-item>   
+          <ion-item>
+            <label class="custom-file-upload">
+              <ion-input [(ngModel)]="attachments" type="file" name="attachments" multiple (change)="onChangeAttachments($event)"></ion-input>
+              Lampiran
+            </label>&nbsp;&nbsp;&nbsp;&nbsp;
+            <div [innerHTML]="msgAttachment"></div>
+          </ion-item> 
+          <ion-button type="submit" expand="full" color="primary">Komentari</ion-button>
+          <br>
+          <p id="stlMsgSubmitKomen">{{msgSubmitKomen}}</p>
+        </form>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row> 
+  </ion-grid>
+  <ion-item *ngFor="let chat of chatSharing">
+    <ion-avatar style="border-color: white">
+      <img class="img-responsive" src="{{avatarUserUrl+chat.userPhoto}}" width="15" height="15">
+    </ion-avatar>&nbsp;&nbsp;&nbsp;
+    <ion-text>
+      <br>
+      <div><a [routerDirection]="'root'" [routerLink]="'/tabs/profile'" [queryParams]="{userId:chat.userId}" style="text-decoration: none;">{{chat.userName}}</a></div>
+      <div>{{chat.komen}}</div>
+      <small *ngFor="let attachment of chat.attachments" (click)="downloadAttachmentChatSharing(attachment)">
+        <img class="img-responsive" src="assets/images/file.png" width="15" height="15">{{attachment|slice:33}}<br>
+      </small>
+      <!-- <div style="text-align:right!important;"><small>{{chat.createdDate | date:'dd/MM/yyyy HH:mm:ss'}}</small></div> -->
+      <br>
+    </ion-text>
+  </ion-item>
+</ion-content>
