@@ -20,56 +20,56 @@ export class LoginPage implements OnInit {
     public platform: Platform
   ) { }
   ngOnInit() {
-    document.getElementById('downloadPwa').style.display = 'none';
-    document.getElementById('appInstalled').style.display = 'none';
-    document.getElementById('spinnerDownloadLink').style.display = 'block';
-    document.getElementById('iphoneMessage').style.display = 'none';
-    if(this.platform.is("ios")){
-      document.getElementById('iphoneMessage').style.display = 'block';
-      document.getElementById('spinnerDownloadLink').style.display = 'none';
-    } else {
-      console.log('!ios')
-    }
-    window.addEventListener('beforeinstallprompt', (e) => {
-      console.log('masuk pak eko')
-      // Prevent the mini-infobar from appearing on mobile
-      e.preventDefault();
-      // Stash the event so it can be triggered later.
-      this.deferredPrompt = e;
-      // Update UI notify the user they can install the PWA
-      document.getElementById('spinnerDownloadLink').style.display = 'none';
-      document.getElementById('downloadPwa').style.display = 'block';
-    });
-    //button click event to show the promt
-    document.getElementById('downloadPwa').addEventListener('click', (e) => {
-      // Hide the app provided install promotion
-      // hideMyInstallPromotion();
-      document.getElementById('downloadPwa').style.display = 'none';
-      // Show the install prompt
-      this.deferredPrompt.prompt();
-      // Wait for the user to respond to the prompt
-      this.deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          document.getElementById('appInstalled').innerHTML = 'You accepted the install prompt';
-          document.getElementById('appInstalled').style.display = 'block';
-        } else {
-          document.getElementById('appInstalled').innerHTML = 'You dismissed the install prompt';
-          document.getElementById('appInstalled').style.display = 'block';
-        }
-      })
-    });
-    window.addEventListener('appinstalled', (evt) => {
-      console.log('Bali Smart Innovation installed');
-    });
-    window.addEventListener('load', () => {
-      if (matchMedia('(display-mode: standalone)').matches) {
-        document.getElementById('appInstalled').innerHTML = 'Bali Smart Innovation installed on your phone';
-        document.getElementById('appInstalled').style.display = 'block';
-        console.log('Launched: Installed');
-      } else {
-        console.log('Launched: Browser Tab');
-      }
-    });
+    // document.getElementById('downloadPwa').style.display = 'none';
+    // document.getElementById('appInstalled').style.display = 'none';
+    // document.getElementById('spinnerDownloadLink').style.display = 'block';
+    // document.getElementById('iphoneMessage').style.display = 'none';
+    // if(this.platform.is("ios")){
+    //   document.getElementById('iphoneMessage').style.display = 'block';
+    //   document.getElementById('spinnerDownloadLink').style.display = 'none';
+    // } else {
+    //   console.log('!ios')
+    // }
+    // window.addEventListener('beforeinstallprompt', (e) => {
+    //   console.log('masuk pak eko')
+    //   //  Prevent the mini-infobar from appearing on mobile
+    //   e.preventDefault();
+    //   // Stash the event so it can be triggered later.
+    //   this.deferredPrompt = e;
+    //   // Update UI notify the user they can install the PWA
+    //   document.getElementById('spinnerDownloadLink').style.display = 'none';
+    //   document.getElementById('downloadPwa').style.display = 'block';
+    // });
+    // //button click event to show the promt
+    // document.getElementById('downloadPwa').addEventListener('click', (e) => {
+    //   // Hide the app provided install promotion
+    //   // hideMyInstallPromotion();
+    //   document.getElementById('downloadPwa').style.display = 'none';
+    //   // Show the install prompt
+    //   this.deferredPrompt.prompt();
+    //   // Wait for the user to respond to the prompt
+    //   this.deferredPrompt.userChoice.then((choiceResult) => {
+    //     if (choiceResult.outcome === 'accepted') {
+    //       document.getElementById('appInstalled').innerHTML = 'You accepted the install prompt';
+    //       document.getElementById('appInstalled').style.display = 'block';
+    //     } else {
+    //       document.getElementById('appInstalled').innerHTML = 'You dismissed the install prompt';
+    //       document.getElementById('appInstalled').style.display = 'block';
+    //     }
+    //   })
+    // });
+    // window.addEventListener('appinstalled', (evt) => {
+    //   console.log('Bali Smart Innovation installed');
+    // });
+    // window.addEventListener('load', () => {
+    //   if (matchMedia('(display-mode: standalone)').matches) {
+    //     document.getElementById('appInstalled').innerHTML = 'Bali Smart Innovation installed on your phone';
+    //     document.getElementById('appInstalled').style.display = 'block';
+    //     console.log('Launched: Installed');
+    //   } else {
+    //     console.log('Launched: Browser Tab');
+    //   }
+    // });
     this.apiService.getSetToken().subscribe(
       (result: any) => {
           if(result.token!=undefined){
